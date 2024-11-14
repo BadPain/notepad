@@ -1,0 +1,97 @@
+.headlineH1 {
+    font-size: 32px;
+    padding-bottom: 10px;
+    font-weight: bolder;
+}
+
+.headlineH2 {
+    font-size: 24px;
+    padding-bottom: 10px;
+    font-weight: bolder;
+}
+
+.headlineH3 {
+    font-size: 18px;
+    padding-bottom: 10px;
+    font-weight: bolder;
+}
+
+.enterArea {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.noteInputCss {
+    margin-bottom: 10px;
+}
+
+.saveBtn {
+    margin-left: 10px;
+    margin-bottom: 30px;
+    width: 150px;
+    height: auto;
+}
+
+.notes {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.trashContentCss {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.noteSave,
+.noteTrash {
+    word-break: break-word;
+    white-space: pre-wrap;
+    max-width: 170px;
+}
+
+.noteSave {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+    border-radius: 10px;
+    width: 220px;
+    height: 220px;
+    background-color: rgb(157, 93, 235);
+    padding: 10px;
+    gap: 10px;
+}
+
+.noteTrash {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+    border-radius: 10px;
+    width: 400px;
+    height: 250px;
+    background-color: rgb(66, 130, 234);
+    padding: 10px;
+    gap: 10px;
+}
+
+.noteTrash button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+}

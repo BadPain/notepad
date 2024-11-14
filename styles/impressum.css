@@ -1,0 +1,23 @@
+.impressumSort{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.impressumBtn {
+    font-size: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.impressum {
+    display: none;
+}
+
+.impressumP{
+    margin-top: 20px;
+}
