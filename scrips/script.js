@@ -62,8 +62,6 @@ function returnNote(indexReturnNote) {
     renderTrashNotes();
 }
 
-
-// Ab hier neuer LocalStorage Code!
 function saveData() {
     let inputTitlesRef = document.getElementById('notesTitles');
     let inputRef = document.getElementById('noteInput');

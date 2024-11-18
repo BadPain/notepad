@@ -45,6 +45,17 @@
     margin-bottom: 20px;
 }
 
+.archivContentCss {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
 .trashContentCss {
     display: flex;
     justify-content: flex-start;
