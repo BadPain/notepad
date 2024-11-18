@@ -9,6 +9,7 @@ let archivNoteTitles = [];
 function init() {
     getFromLocalStorage();
     renderNotes();
+    renderArchivNotes();
     renderTrashNotes();
 }
 
@@ -44,7 +45,7 @@ function getNoteTemplate(indexNote) {
     <div>
     <p class="noteSave">
     <button onclick="deleteNote(${indexNote})">Delete</button>
-    <button onclick="sendToArchiv(${indexNote})">Send to Archiv</button>
+    <button onclick="sendToArchiv(${indexNote})">Archive Note</button>
     ${notesTitles[indexNote]}<br>${notes[indexNote]}</p><br>
     </div>`;
 }
@@ -53,8 +54,8 @@ function getArchivNoteTemplate(indexArchivNote) {
     return `
     <div>
     <p class="noteArchive">
-    <button onclick="sendToArchiv(${indexArchivNote})">Send to Archiv</button>
-    <button onclick="returnNote(${indexArchivNote})">Re-Saved</button>
+    <button onclick="returnFromArchive(${indexArchivNote})">Restore from Archive</button>
+    <button onclick="deleteFromArchiv(${indexArchivNote})">Move to Trash</button>
     ${archivNoteTitles[indexArchivNote]}<br>${archivNotes[indexArchivNote]}</p><br>
     </div>`;
 }
@@ -63,8 +64,8 @@ function getTrashNoteTemplate(indexTrashNote) {
     return `
     <div>
     <p class="noteTrash">
-    <button onclick="permanentlyDelete(${indexTrashNote})">Perm. Delete</button>
-    <button onclick="returnNote(${indexTrashNote})">Re-Saved</button>
+    <button onclick="permanentlyDelete(${indexTrashNote})">Delete Forever</button>
+    <button onclick="returnNote(${indexTrashNote})">Restore from Trash</button>
     ${trashNoteTitles[indexTrashNote]}<br>${trashNotes[indexTrashNote]}</p><br>
     </div>`;
 }
@@ -77,9 +78,17 @@ function sendToArchiv(indexNote) {
     saveToLocalStorage();
     renderArchivNotes();
     renderNotes();
-    renderTrashNotes();
 }
 
+function deleteFromArchiv(indexArchiveNote) {
+    let trashNote = archivNotes.splice(indexArchiveNote, 1)[0];
+    trashNotes.push(trashNote);
+    let trashNoteTitle = archivNoteTitles.splice(indexArchiveNote, 1)[0];
+    trashNoteTitles.push(trashNoteTitle);
+    saveToLocalStorage();
+    renderArchivNotes();
+    renderTrashNotes();
+}
 
 function deleteNote(indexNote) {
     let trashNote = notes.splice(indexNote, 1)[0];
@@ -87,16 +96,17 @@ function deleteNote(indexNote) {
     let trashNoteTitle = notesTitles.splice(indexNote, 1)[0];
     trashNoteTitles.push(trashNoteTitle);
     saveToLocalStorage();
-    renderArchivNotes();
     renderNotes();
     renderTrashNotes();
 }
 
 function permanentlyDelete(indexTrashNote) {
-    trashNotes.splice(indexTrashNote, 1);
-    trashNoteTitles.splice(indexTrashNote, 1);
-    saveToLocalStorage();
-    renderTrashNotes();
+    if (confirm("Are you sure?")) {
+        trashNotes.splice(indexTrashNote, 1);
+        trashNoteTitles.splice(indexTrashNote, 1);
+        saveToLocalStorage();
+        renderTrashNotes();
+    }
 }
 
 function returnNote(indexReturnNote) {
@@ -105,9 +115,18 @@ function returnNote(indexReturnNote) {
     notes.push(restoredNote);
     notesTitles.push(restoredNoteTitle);
     saveToLocalStorage();
-    renderArchivNotes();
     renderNotes();
     renderTrashNotes();
+}
+
+function returnFromArchive(indexArchiveNote) {
+    let restoredNote = archivNotes.splice(indexArchiveNote, 1)[0];
+    let restoredNoteTitle = archivNoteTitles.splice(indexArchiveNote, 1)[0];
+    notes.push(restoredNote);
+    notesTitles.push(restoredNoteTitle);
+    saveToLocalStorage();
+    renderNotes();
+    renderArchivNotes();
 }
 
 function saveData() {
@@ -130,32 +149,31 @@ function saveData() {
     }
 }
 
-
 function saveToLocalStorage() {
     localStorage.setItem("noteInput", JSON.stringify(notes));
     localStorage.setItem("notesTitlesSave", JSON.stringify(notesTitles));
     localStorage.setItem("trashNotes", JSON.stringify(trashNotes));
     localStorage.setItem("trashNoteTitles", JSON.stringify(trashNoteTitles));
+    localStorage.setItem("archivNotes", JSON.stringify(archivNotes));
+    localStorage.setItem("archivNoteTitles", JSON.stringify(archivNoteTitles));
 }
 
 function getFromLocalStorage() {
     let savedNotes = JSON.parse(localStorage.getItem("noteInput"));
-    let savedTitles = JSON.parse(localStorage.getItem("notesTitlesSave"))
+    let savedTitles = JSON.parse(localStorage.getItem("notesTitlesSave"));
     let savedTrashNotes = JSON.parse(localStorage.getItem("trashNotes"));
     let savedTrashTitles = JSON.parse(localStorage.getItem("trashNoteTitles"));
+    let savedArchiveNotes = JSON.parse(localStorage.getItem("archiveNotes"));
+    let savedArchiveTitles = JSON.parse(localStorage.getItem("archiveNoteTitles"));
 
-    if (savedNotes && Array.isArray(savedNotes)) {
-        notes = savedNotes;
-    }
-    if (savedTitles && Array.isArray(savedTitles)) {
-        notesTitles = savedTitles;
-    }
-    if (savedTrashNotes && Array.isArray(savedTrashNotes)) {
-        trashNotes = savedTrashNotes;
-    }
-    if (savedTrashTitles && Array.isArray(savedTrashTitles)) {
-        trashNoteTitles = savedTrashTitles;
-    }
+    notes = Array.isArray(savedNotes) ? savedNotes : [];
+    notesTitles = Array.isArray(savedTitles) ? savedTitles : [];
+    trashNotes = Array.isArray(savedTrashNotes) ? savedTrashNotes : [];
+    trashNoteTitles = Array.isArray(savedTrashTitles) ? savedTrashTitles : [];
+    archivNotes = Array.isArray(savedArchiveNotes) ? savedArchiveNotes : [];
+    archivNoteTitles = Array.isArray(savedArchiveTitles) ? savedArchiveTitles : [];
+
+
 }
 
 function render() {
