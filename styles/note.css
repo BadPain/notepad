@@ -68,10 +68,24 @@
 }
 
 .noteSave,
-.noteTrash {
+.noteTrash,
+.noteArchive {
     word-break: break-word;
     white-space: pre-wrap;
     max-width: 170px;
+}
+
+.noteArchive{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+    border-radius: 10px;
+    width: 220px;
+    height: 220px;
+    background-color: rgb(8, 116, 47);
+    padding: 10px;
+    gap: 10px;
 }
 
 .noteSave {

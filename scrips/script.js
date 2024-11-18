@@ -26,7 +26,7 @@ function renderArchivNotes() {
     archivContentRef.innerHTML = "";
 
     for (let indexArchivNote = 0; indexArchivNote < archivNotes.length; indexArchivNote++) {
-        archivContentRef.innerHTML += getTrashNoteTemplate(indexArchivNote);
+        archivContentRef.innerHTML += getArchivNoteTemplate(indexArchivNote);
     }
 }
 
@@ -40,22 +40,40 @@ function renderTrashNotes() {
 }
 
 function getNoteTemplate(indexNote) {
-    return `<p class="noteSave"><button onclick="deleteNote(${indexNote})">Delete</button> ${notesTitles[indexNote]}:<br> ${notes[indexNote]}</p><br>`;
+    return `
+    <div>
+    <p class="noteSave">
+    <button onclick="deleteNote(${indexNote})">Delete</button>
+    <button onclick="sendToArchiv(${indexNote})">Send to Archiv</button>
+    ${notesTitles[indexNote]}<br>${notes[indexNote]}</p><br>
+    </div>`;
 }
-// <p class="noteTrash"><button onclick="sendToArchiv(${indexArchivNote})">Archiv</button><button onclick="returnNote(${indexArchivNote})">Re-Saved</button> ${archivNoteTitles[indexArchivNote]}:<br> ${archivNotes[indexArchivNote]}</p><br>
-function getTrashNoteTemplate(indexArchivNote) {
-    return `<p class="noteTrash"><button onclick="sendToArchiv(${indexArchivNote})">Archiv</button><button onclick="returnNote(${indexArchivNote})">Re-Saved</button> ${archivNoteTitles[indexArchivNote]}:<br> ${archivNotes[indexArchivNote]}</p><br>`;
+
+function getArchivNoteTemplate(indexArchivNote) {
+    return `
+    <div>
+    <p class="noteArchive">
+    <button onclick="sendToArchiv(${indexArchivNote})">Send to Archiv</button>
+    <button onclick="returnNote(${indexArchivNote})">Re-Saved</button>
+    ${archivNoteTitles[indexArchivNote]}<br>${archivNotes[indexArchivNote]}</p><br>
+    </div>`;
 }
 
 function getTrashNoteTemplate(indexTrashNote) {
-    return `<p class="noteTrash"><button onclick="permanentlyDelete(${indexTrashNote})">Perm. Delete</button><button onclick="returnNote(${indexTrashNote})">Re-Saved</button> ${trashNoteTitles[indexTrashNote]}:<br> ${trashNotes[indexTrashNote]}</p><br>`;
+    return `
+    <div>
+    <p class="noteTrash">
+    <button onclick="permanentlyDelete(${indexTrashNote})">Perm. Delete</button>
+    <button onclick="returnNote(${indexTrashNote})">Re-Saved</button>
+    ${trashNoteTitles[indexTrashNote]}<br>${trashNotes[indexTrashNote]}</p><br>
+    </div>`;
 }
 
 function sendToArchiv(indexNote) {
-    let archivNotes = notes.splice(indexNote, 1)[0];
-    archivNotes.push(archivNotes);
-    let archivNoteTitles = notesTitles.splice(indexNote, 1)[0];
-    archivNoteTitles.push(archivNoteTitles);
+    let archivNote = notes.splice(indexNote, 1)[0];
+    archivNotes.push(archivNote);
+    let archivNoteTitle = notesTitles.splice(indexNote, 1)[0];
+    archivNoteTitles.push(archivNoteTitle);
     saveToLocalStorage();
     renderArchivNotes();
     renderNotes();
@@ -87,6 +105,7 @@ function returnNote(indexReturnNote) {
     notes.push(restoredNote);
     notesTitles.push(restoredNoteTitle);
     saveToLocalStorage();
+    renderArchivNotes();
     renderNotes();
     renderTrashNotes();
 }
@@ -101,10 +120,11 @@ function saveData() {
 
         inputTitlesRef.value = "";
         inputRef.value = "";
-        
+
         saveToLocalStorage();
+        renderArchivNotes();
         renderNotes();
-    
+
     } else {
         alert("Na, Na, Na, the cat need both!")
     }
@@ -140,5 +160,6 @@ function getFromLocalStorage() {
 
 function render() {
     renderNotes();
+    renderArchivNotes();
     renderTrashNotes();
 }
