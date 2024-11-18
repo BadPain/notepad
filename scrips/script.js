@@ -2,6 +2,9 @@ let notesTitles = [];
 let notes = [];
 let trashNotes = [];
 let trashNoteTitles = [];
+let archivNotes = [];
+let archivNoteTitles = [];
+
 
 function init() {
     getFromLocalStorage();
@@ -18,6 +21,15 @@ function renderNotes() {
     }
 }
 
+function renderArchivNotes() {
+    let archivContentRef = document.getElementById('archivContent');
+    archivContentRef.innerHTML = "";
+
+    for (let indexArchivNote = 0; indexArchivNote < archivNotes.length; indexArchivNote++) {
+        archivContentRef.innerHTML += getTrashNoteTemplate(indexArchivNote);
+    }
+}
+
 function renderTrashNotes() {
     let trashContentRef = document.getElementById('trashContent');
     trashContentRef.innerHTML = "";
@@ -30,10 +42,26 @@ function renderTrashNotes() {
 function getNoteTemplate(indexNote) {
     return `<p class="noteSave"><button onclick="deleteNote(${indexNote})">Delete</button> ${notesTitles[indexNote]}:<br> ${notes[indexNote]}</p><br>`;
 }
+// <p class="noteTrash"><button onclick="sendToArchiv(${indexArchivNote})">Archiv</button><button onclick="returnNote(${indexArchivNote})">Re-Saved</button> ${archivNoteTitles[indexArchivNote]}:<br> ${archivNotes[indexArchivNote]}</p><br>
+function getTrashNoteTemplate(indexArchivNote) {
+    return `<p class="noteTrash"><button onclick="sendToArchiv(${indexArchivNote})">Archiv</button><button onclick="returnNote(${indexArchivNote})">Re-Saved</button> ${archivNoteTitles[indexArchivNote]}:<br> ${archivNotes[indexArchivNote]}</p><br>`;
+}
 
 function getTrashNoteTemplate(indexTrashNote) {
     return `<p class="noteTrash"><button onclick="permanentlyDelete(${indexTrashNote})">Perm. Delete</button><button onclick="returnNote(${indexTrashNote})">Re-Saved</button> ${trashNoteTitles[indexTrashNote]}:<br> ${trashNotes[indexTrashNote]}</p><br>`;
 }
+
+function sendToArchiv(indexNote) {
+    let archivNotes = notes.splice(indexNote, 1)[0];
+    archivNotes.push(archivNotes);
+    let archivNoteTitles = notesTitles.splice(indexNote, 1)[0];
+    archivNoteTitles.push(archivNoteTitles);
+    saveToLocalStorage();
+    renderArchivNotes();
+    renderNotes();
+    renderTrashNotes();
+}
+
 
 function deleteNote(indexNote) {
     let trashNote = notes.splice(indexNote, 1)[0];
@@ -41,6 +69,7 @@ function deleteNote(indexNote) {
     let trashNoteTitle = notesTitles.splice(indexNote, 1)[0];
     trashNoteTitles.push(trashNoteTitle);
     saveToLocalStorage();
+    renderArchivNotes();
     renderNotes();
     renderTrashNotes();
 }
