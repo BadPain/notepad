@@ -18,8 +18,8 @@
 
 .enterArea {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -67,67 +67,54 @@
     margin-bottom: 20px;
 }
 
-.noteSave,
-.noteTrash,
-.noteArchive {
+.noteRegular {
+    border-radius: 10px;
+    background-color: rgb(194, 100, 194);
+    width: 220px;
+    height: 220px;
+    padding: 10px;
+    gap: 10px;
+}
+
+.noteSaveTitle,
+.noteArchiveTitle,
+.noteTrashTitle {
+    display: flex;
+    justify-content: center;
     word-break: break-word;
     white-space: pre-wrap;
-    max-width: 170px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 5px 0;
-    background-color: #f26969;
-    border-radius: 5px;
+    font-size: 26px;
+    font-weight: bold;
 }
 
-.noteArchive {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column-reverse;
-    border-radius: 10px;
-    width: 220px;
-    height: 220px;
-    background-color: rgb(8, 116, 47);
-    padding: 10px;
-    gap: 10px;
-}
-
-.noteSave {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column-reverse;
-    border-radius: 10px;
-    width: 220px;
-    height: 220px;
-    background-color: rgb(157, 93, 235);
-    padding: 10px;
-    gap: 10px;
-}
-
+.noteSave,
+.noteArchive,
 .noteTrash {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column-reverse;
-    border-radius: 10px;
-    width: 400px;
-    height: 250px;
-    background-color: rgb(66, 130, 234);
-    padding: 10px;
-    gap: 10px;
-}
-
-.noteSave button,
-.noteTrash button,
-.noteArchive button {
-    margin-right: 5px;
-}
-
-/* .noteTrash button {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
+    word-break: break-word;
+    white-space: pre-wrap;
+    font-size: 18px;
     width: 100px;
-} */
+    height: 150px;
+}
+
+.noteSaveButton {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.noteArchivButton {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.noteTrashButton {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}

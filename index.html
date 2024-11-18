@@ -25,12 +25,13 @@
             </nav>
         </header>
         <h1>Notepad</h1>
-        <p id="add_notes" class="headlineH2">Add Note</p>
         <section class="enterArea">
+            <p id="add_notes" class="headlineH2">Add Note</p>
             <p class="headlineH3">Titel</p>
             <input id="notesTitles" class="noteInputCss" type="text" maxlength="15">
             <p class="headlineH3">Notiz</p>
-            <input id="noteInput" class="noteInputCss" type="text" maxlength="30">
+            <textarea name="" class="noteInputCss" id="noteInput" type="text" maxlength="30"></textarea>
+            <!-- <input id="noteInput" class="noteInputCss" type="text" maxlength="30"> -->
             <button class="saveBtn" onclick="saveData()">save</button>
         </section>
         <p class="headlineH3">Saved Notes</p>

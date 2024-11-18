@@ -42,31 +42,37 @@ function renderTrashNotes() {
 
 function getNoteTemplate(indexNote) {
     return `
-    <div>
-    <p class="noteSave">
-    <button onclick="deleteNote(${indexNote})">Delete</button>
-    <button onclick="sendToArchiv(${indexNote})">Archive Note</button>
-    ${notesTitles[indexNote]}<br>${notes[indexNote]}</p><br>
+    <div class="noteRegular">
+        <div><u><p class="noteSaveTitle">${notesTitles[indexNote]}</p></u></div>
+        <div><p class="noteSave">${notes[indexNote]}</p></div>
+        <div class="noteSaveButton">
+            <button onclick="deleteNote(${indexNote})">Delete</button>
+            <button onclick="sendToArchiv(${indexNote})">Archive Note</button>
+        </div>
     </div>`;
 }
 
 function getArchivNoteTemplate(indexArchivNote) {
     return `
-    <div>
-    <p class="noteArchive">
-    <button onclick="returnFromArchive(${indexArchivNote})">Restore from Archive</button>
-    <button onclick="deleteFromArchiv(${indexArchivNote})">Move to Trash</button>
-    ${archivNoteTitles[indexArchivNote]}<br>${archivNotes[indexArchivNote]}</p><br>
+    <div class="noteRegular">
+        <div><u><p class="noteArchiveTitle">${archivNoteTitles[indexArchivNote]}</p></u></div>
+        <div><p class="noteArchive">${archivNotes[indexArchivNote]}</p></div>
+        <div class="noteArchivButton">
+            <button onclick="returnFromArchive(${indexArchivNote})">Restore</button>
+            <button onclick="deleteFromArchiv(${indexArchivNote})">Trash</button>
+        </div>
     </div>`;
 }
 
 function getTrashNoteTemplate(indexTrashNote) {
     return `
-    <div>
-    <p class="noteTrash">
-    <button onclick="permanentlyDelete(${indexTrashNote})">Delete Forever</button>
-    <button onclick="returnNote(${indexTrashNote})">Restore from Trash</button>
-    ${trashNoteTitles[indexTrashNote]}<br>${trashNotes[indexTrashNote]}</p><br>
+    <div class="noteRegular">
+        <div><u><p class="noteTrashTitle">${trashNoteTitles[indexTrashNote]}</p></u></div>
+        <div><p class="noteTrash">${trashNotes[indexTrashNote]}</p></div>
+        <div class="noteTrashButton">
+            <button onclick="permanentlyDelete(${indexTrashNote})">Delete Forever</button>
+            <button onclick="returnNote(${indexTrashNote})">Restore</button>
+        </div>
     </div>`;
 }
 
@@ -172,8 +178,6 @@ function getFromLocalStorage() {
     trashNoteTitles = Array.isArray(savedTrashTitles) ? savedTrashTitles : [];
     archivNotes = Array.isArray(savedArchiveNotes) ? savedArchiveNotes : [];
     archivNoteTitles = Array.isArray(savedArchiveTitles) ? savedArchiveTitles : [];
-
-
 }
 
 function render() {
